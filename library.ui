@@ -123,7 +123,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -316,7 +316,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
@@ -447,16 +447,6 @@
          <string>Publisher</string>
         </property>
        </widget>
-       <widget class="QPlainTextEdit" name="plainTextEdit">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>170</y>
-          <width>431</width>
-          <height>331</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
@@ -481,6 +471,16 @@
         </property>
         <property name="text">
          <string>Book Code</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="edt_book_description">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>170</y>
+          <width>351</width>
+          <height>311</height>
+         </rect>
         </property>
        </widget>
       </widget>
@@ -613,16 +613,6 @@
          <string>Publisher</string>
         </property>
        </widget>
-       <widget class="QPlainTextEdit" name="plainTextEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>119</x>
-          <y>180</y>
-          <width>401</width>
-          <height>261</height>
-         </rect>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_13">
         <property name="geometry">
          <rect>
@@ -696,6 +686,16 @@
         </property>
         <property name="text">
          <string>Search</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="textEdit">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>190</y>
+          <width>351</width>
+          <height>231</height>
+         </rect>
         </property>
        </widget>
       </widget>

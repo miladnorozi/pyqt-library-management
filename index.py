@@ -4,10 +4,11 @@ from PyQt5.QtWidgets import *
 import sys
 import MySQLdb
 from PyQt5.uic import loadUiType
-ui,_ = loadUiType('library.ui')
+
+ui, _ = loadUiType('library.ui')
 
 
-class MainApp(QMainWindow , ui):
+class MainApp(QMainWindow, ui):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
@@ -42,7 +43,6 @@ class MainApp(QMainWindow , ui):
     def Hiding_Themes(self):
         self.groupbox_theme.hide()
 
-
     ################################
     ############# Tabs #############
     def Open_Day_To_Day_Tab(self):
@@ -60,14 +60,32 @@ class MainApp(QMainWindow , ui):
     ################################
     ############# Books #############
     def AddNewBook(self):
-        self.db = MySQLdb.connect(host='localhost',user='root',password='',db='library')
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
         self.cur = self.db.cursor()
         book_title = self.edt_book_title.text()
+        book_description = self.edt_book_description.toPlainText()
         book_code = self.edt_book_code.text()
         book_price = self.edt_book_price.text()
-        book_category = self.combo_category.CurrentText()
-        book_author = self.combo_author.CurrentText()
-        book_publisher = self.combo_publisher.CurrentText()
+        book_category = self.combo_book_category.currentIndex()
+        book_author = self.combo_book_author.currentIndex()
+        book_publisher = self.combo_book_publisher.currentIndex()
+
+        self.cur.execute('''
+            INSERT INTO book(book_name,book_description,book_code,book_category,book_author,book_publisher,book_price)
+            VALUES (%s, %s, %s,%s, %s, %s,%s)  
+        ''', (book_title, book_description, book_code, book_category, book_author, book_publisher, book_price))
+
+        self.db.commit()
+        self.statusBar().showMessage('New Book Added')
+
+        self.edt_book_title.setText('')
+        self.edt_book_description.setText('')
+        self.edt_book_code.setText('')
+        self.edt_book_price.setText('')
+        self.combo_book_category.setCurrentIndex(0)
+        self.combo_book_author.setCurrentIndex(0)
+        self.combo_book_publisher.setCurrentIndex(0)
+
     def SearchBooks(self):
         pass
 
@@ -97,11 +115,12 @@ class MainApp(QMainWindow , ui):
 
         self.cur.execute('''
             INSERT INTO  category (category_name) VALUES (%s)
-        ''',(category_name,))
+        ''', (category_name,))
         self.db.commit()
         self.statusBar().showMessage('new category added')
         self.add_category_edt_name.setText('')
         self.ShowCategory()
+        self.Show_Category_Combobox()
 
     def ShowCategory(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -115,7 +134,7 @@ class MainApp(QMainWindow , ui):
             self.category_tabwidget.insertRow(0)
             for row, form in enumerate(data):
                 for column, item in enumerate(form):
-                    self.category_tabwidget.setItem(row,column,QTableWidgetItem(str(item)))
+                    self.category_tabwidget.setItem(row, column, QTableWidgetItem(str(item)))
                     column += 1
                 row_position = self.category_tabwidget.rowCount()
                 self.category_tabwidget.insertRow(row_position)
@@ -132,6 +151,7 @@ class MainApp(QMainWindow , ui):
         self.statusBar().showMessage('new author added')
         self.add_author_edt_name.setText('')
         self.ShowAuthor()
+        self.Show_Author_Combobox()
 
     def ShowAuthor(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -162,6 +182,7 @@ class MainApp(QMainWindow , ui):
         self.statusBar().showMessage('new publisher added')
         self.add_publisher_edt_name.setText('')
         self.ShowPublisher()
+        self.Show_Publisher_Combobox()
 
     def ShowPublisher(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -179,6 +200,7 @@ class MainApp(QMainWindow , ui):
                     column += 1
                 row_position = self.publisher_tabwidget.rowCount()
                 self.publisher_tabwidget.insertRow(row_position)
+
     ################################
     ############# Settings #############
 
@@ -188,7 +210,7 @@ class MainApp(QMainWindow , ui):
 
         self.cur.execute(''' SELECT category_name FROM category ''')
         data = self.cur.fetchall()
-
+        self.combo_book_category.clear()
         for category in data:
             self.combo_book_category.addItem(category[0])
 
@@ -198,7 +220,7 @@ class MainApp(QMainWindow , ui):
 
         self.cur.execute(''' SELECT author_name FROM authors ''')
         data = self.cur.fetchall()
-
+        self.combo_book_author.clear()
         for author in data:
             self.combo_book_author.addItem(author[0])
 
@@ -208,15 +230,17 @@ class MainApp(QMainWindow , ui):
 
         self.cur.execute(''' SELECT publisher_name FROM publisher ''')
         data = self.cur.fetchall()
-
+        self.combo_book_publisher.clear()
         for publisher in data:
             self.combo_book_publisher.addItem(publisher[0])
 
+
 def main():
-        app = QApplication(sys.argv)
-        window = MainApp()
-        window.show()
-        app.exec_()
+    app = QApplication(sys.argv)
+    window = MainApp()
+    window.show()
+    app.exec_()
+
 
 if __name__ == '__main__':
     main()
