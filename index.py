@@ -16,6 +16,9 @@ class MainApp(QMainWindow , ui):
         self.ShowCategory()
         self.ShowAuthor()
         self.ShowPublisher()
+        self.Show_Category_Combobox()
+        self.Show_Author_Combobox()
+        self.Show_Publisher_Combobox()
 
     def Handel_UI_Changes(self):
         self.Hiding_Themes()
@@ -176,6 +179,38 @@ class MainApp(QMainWindow , ui):
                     column += 1
                 row_position = self.publisher_tabwidget.rowCount()
                 self.publisher_tabwidget.insertRow(row_position)
+    ################################
+    ############# Settings #############
+
+    def Show_Category_Combobox(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT category_name FROM category ''')
+        data = self.cur.fetchall()
+
+        for category in data:
+            self.combo_book_category.addItem(category[0])
+
+    def Show_Author_Combobox(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT author_name FROM authors ''')
+        data = self.cur.fetchall()
+
+        for author in data:
+            self.combo_book_author.addItem(author[0])
+
+    def Show_Publisher_Combobox(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT publisher_name FROM publisher ''')
+        data = self.cur.fetchall()
+
+        for publisher in data:
+            self.combo_book_publisher.addItem(publisher[0])
 
 def main():
         app = QApplication(sys.argv)
