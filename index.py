@@ -37,6 +37,8 @@ class MainApp(QMainWindow, ui):
         self.add_author_btn_add.clicked.connect(self.AddAuthor)
         self.add_publisher_btn_add.clicked.connect(self.AddPublisher)
         self.search_btn.clicked.connect(self.SearchBooks)
+        self.edit_btn_save.clicked.connect(self.EditBooks)
+        self.edit_btn_delete.clicked.connect(self.DeleteBooks)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -107,10 +109,46 @@ class MainApp(QMainWindow, ui):
         self.edit_price.setText(data[7])
 
     def EditBooks(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        book_title = self.edit_title.text()
+        book_description = self.edit_description.toPlainText()
+        book_code = self.edit_code.text()
+        book_price = self.edit_price.text()
+        book_category = self.edit_combo_category.currentIndex()
+        book_author = self.edit_combo_author.currentIndex()
+        book_publisher = self.edit_combo_publisher.currentIndex()
+
+        book_search_title = self.search_book_title.text()
+
+        self.cur.execute('''
+            UPDATE book SET book_name=%s ,book_description=%s ,book_code=%s ,book_category=%s ,book_author=%s ,book_publisher=%s ,book_price=%s WHERE book_name=%s
+        ''',(book_title,book_description,book_code,book_category,book_author,book_publisher,book_price,book_search_title))
+
+        self.db.commit()
+        self.statusBar().showMessage('book updated')
 
     def DeleteBooks(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        book_title = self.edit_title.text()
+
+        warning = QMessageBox.warning(self,'Delete book',"are you sure want to delete this book?",QMessageBox.Yes|QMessageBox.No)
+
+        if warning == QMessageBox.Yes :
+            sql = ''' DELETE FROM book WHERE book_name = %s '''
+            self.cur.execute(sql,[(book_title)])
+            self.db.commit()
+            self.statusBar().showMessage('book deleted')
+        self.edit_title.setText('')
+        self.edit_description.setText('')
+        self.edit_code.setText('')
+        self.edit_price.setText('')
+        self.search_book_title.setText('')
+        self.edit_combo_category.setCurrentIndex(0)
+        self.edit_combo_author.setCurrentIndex(0)
+        self.edit_combo_publisher.setCurrentIndex(0)
 
     ################################
     ############# Users #############

@@ -561,7 +561,7 @@
          <string>Book Title</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="edit_btn_save">
         <property name="geometry">
          <rect>
           <x>620</x>
@@ -639,7 +639,7 @@
          <string>Book Code</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="edit_btn_delete">
         <property name="geometry">
          <rect>
           <x>139</x>
