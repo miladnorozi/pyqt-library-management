@@ -36,6 +36,7 @@ class MainApp(QMainWindow, ui):
         self.add_category_btn_add.clicked.connect(self.AddCategory)
         self.add_author_btn_add.clicked.connect(self.AddAuthor)
         self.add_publisher_btn_add.clicked.connect(self.AddPublisher)
+        self.search_btn.clicked.connect(self.SearchBooks)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -87,7 +88,23 @@ class MainApp(QMainWindow, ui):
         self.combo_book_publisher.setCurrentIndex(0)
 
     def SearchBooks(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        book_title = self.search_book_title.text()
+
+        sql = ''' SELECT * FROM book WHERE book_name = %s '''
+        self.cur.execute(sql, [(book_title)])
+
+        data = self.cur.fetchone()
+
+        self.edit_title.setText(data[1])
+        self.edit_description.setText(data[2])
+        self.edit_code.setText(data[3])
+        self.edit_combo_category.setCurrentIndex(data[4])
+        self.edit_combo_author.setCurrentIndex(data[5])
+        self.edit_combo_publisher.setCurrentIndex(data[6])
+        self.edit_price.setText(data[7])
 
     def EditBooks(self):
         pass
@@ -213,6 +230,7 @@ class MainApp(QMainWindow, ui):
         self.combo_book_category.clear()
         for category in data:
             self.combo_book_category.addItem(category[0])
+            self.edit_combo_category.addItem(category[0])
 
     def Show_Author_Combobox(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -223,6 +241,7 @@ class MainApp(QMainWindow, ui):
         self.combo_book_author.clear()
         for author in data:
             self.combo_book_author.addItem(author[0])
+            self.edit_combo_author.addItem(author[0])
 
     def Show_Publisher_Combobox(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -233,6 +252,7 @@ class MainApp(QMainWindow, ui):
         self.combo_book_publisher.clear()
         for publisher in data:
             self.combo_book_publisher.addItem(publisher[0])
+            self.edit_combo_publisher.addItem(publisher[0])
 
 
 def main():

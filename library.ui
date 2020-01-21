@@ -488,7 +488,7 @@
        <attribute name="title">
         <string>Edit Or Delete Book</string>
        </attribute>
-       <widget class="QLineEdit" name="lineEdit_5">
+       <widget class="QLineEdit" name="search_book_title">
         <property name="geometry">
          <rect>
           <x>260</x>
@@ -498,7 +498,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_6">
+       <widget class="QLineEdit" name="edit_code">
         <property name="geometry">
          <rect>
           <x>728</x>
@@ -508,7 +508,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="edit_combo_category">
         <property name="geometry">
          <rect>
           <x>728</x>
@@ -518,7 +518,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_7">
+       <widget class="QLineEdit" name="edit_price">
         <property name="geometry">
          <rect>
           <x>730</x>
@@ -528,7 +528,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_7">
+       <widget class="QComboBox" name="edit_combo_publisher">
         <property name="geometry">
          <rect>
           <x>728</x>
@@ -538,7 +538,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QComboBox" name="comboBox_8">
+       <widget class="QComboBox" name="edit_combo_author">
         <property name="geometry">
          <rect>
           <x>728</x>
@@ -652,7 +652,7 @@
          <string>Delete</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_8">
+       <widget class="QLineEdit" name="edit_title">
         <property name="geometry">
          <rect>
           <x>259</x>
@@ -675,7 +675,7 @@
          <string>Book Title</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_10">
+       <widget class="QPushButton" name="search_btn">
         <property name="geometry">
          <rect>
           <x>569</x>
@@ -688,7 +688,7 @@
          <string>Search</string>
         </property>
        </widget>
-       <widget class="QTextEdit" name="textEdit">
+       <widget class="QTextEdit" name="edit_description">
         <property name="geometry">
          <rect>
           <x>90</x>
