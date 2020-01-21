@@ -13,6 +13,7 @@ class MainApp(QMainWindow , ui):
         self.setupUi(self)
         self.Handel_UI_Changes()
         self.Handel_Buttons()
+        self.ShowCategory()
 
     def Handel_UI_Changes(self):
         self.Hiding_Themes()
@@ -27,7 +28,7 @@ class MainApp(QMainWindow , ui):
         self.btn_setting.clicked.connect(self.Open_Settings_Tab)
         self.btn_add_book.clicked.connect(self.AddNewBook)
         self.add_category_btn_add.clicked.connect(self.AddCategory)
-        self.add_category_btn_add.clicked.connect(self.AddAuthor)
+        self.add_author_btn_add.clicked.connect(self.AddAuthor)
         self.add_publisher_btn_add.clicked.connect(self.AddPublisher)
 
     def Show_Themes(self):
@@ -94,6 +95,25 @@ class MainApp(QMainWindow , ui):
         ''',(category_name,))
         self.db.commit()
         self.statusBar().showMessage('new category added')
+        self.add_category_edt_name.setText('')
+        self.ShowCategory()
+
+    def ShowCategory(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT category_name FROM category ''')
+        data = self.cur.fetchall()
+
+        if data:
+            self.category_tabwidget.setRowCount(0)
+            self.category_tabwidget.insertRow(0)
+            for row, form in enumerate(data):
+                for column, item in enumerate(form):
+                    self.category_tabwidget.setItem(row,column,QTableWidgetItem(str(item)))
+                    column += 1
+                row_position = self.category_tabwidget.rowCount()
+                self.category_tabwidget.insertRow(row_position)
 
     def AddAuthor(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -105,6 +125,10 @@ class MainApp(QMainWindow , ui):
          ''', (author_name,))
         self.db.commit()
         self.statusBar().showMessage('new author added')
+        self.add_author_edt_name.setText('')
+
+    def ShowAuthor(self):
+        pass
 
     def AddPublisher(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -116,6 +140,10 @@ class MainApp(QMainWindow , ui):
          ''', (publisher_name,))
         self.db.commit()
         self.statusBar().showMessage('new publisher added')
+        self.add_publisher_edt_name.setText('')
+
+    def ShowPublisher(self):
+        pass
 
 def main():
         app = QApplication(sys.argv)
