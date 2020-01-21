@@ -14,6 +14,8 @@ class MainApp(QMainWindow , ui):
         self.Handel_UI_Changes()
         self.Handel_Buttons()
         self.ShowCategory()
+        self.ShowAuthor()
+        self.ShowPublisher()
 
     def Handel_UI_Changes(self):
         self.Hiding_Themes()
@@ -126,9 +128,24 @@ class MainApp(QMainWindow , ui):
         self.db.commit()
         self.statusBar().showMessage('new author added')
         self.add_author_edt_name.setText('')
+        self.ShowAuthor()
 
     def ShowAuthor(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT author_name FROM authors ''')
+        data = self.cur.fetchall()
+
+        if data:
+            self.author_tabwidget.setRowCount(0)
+            self.author_tabwidget.insertRow(0)
+            for row, form in enumerate(data):
+                for column, item in enumerate(form):
+                    self.author_tabwidget.setItem(row, column, QTableWidgetItem(str(item)))
+                    column += 1
+                row_position = self.author_tabwidget.rowCount()
+                self.author_tabwidget.insertRow(row_position)
 
     def AddPublisher(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -141,9 +158,24 @@ class MainApp(QMainWindow , ui):
         self.db.commit()
         self.statusBar().showMessage('new publisher added')
         self.add_publisher_edt_name.setText('')
+        self.ShowPublisher()
 
     def ShowPublisher(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT publisher_name FROM publisher ''')
+        data = self.cur.fetchall()
+
+        if data:
+            self.publisher_tabwidget.setRowCount(0)
+            self.publisher_tabwidget.insertRow(0)
+            for row, form in enumerate(data):
+                for column, item in enumerate(form):
+                    self.publisher_tabwidget.setItem(row, column, QTableWidgetItem(str(item)))
+                    column += 1
+                row_position = self.publisher_tabwidget.rowCount()
+                self.publisher_tabwidget.insertRow(row_position)
 
 def main():
         app = QApplication(sys.argv)

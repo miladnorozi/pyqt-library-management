@@ -123,7 +123,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1030,7 +1030,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_7">
        <attribute name="title">
@@ -1092,7 +1092,7 @@
        <attribute name="title">
         <string>Author</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_3">
+       <widget class="QTableWidget" name="author_tabwidget">
         <property name="geometry">
          <rect>
           <x>0</x>
@@ -1148,7 +1148,7 @@
        <attribute name="title">
         <string>Publisher</string>
        </attribute>
-       <widget class="QTableWidget" name="tableWidget_4">
+       <widget class="QTableWidget" name="publisher_tabwidget">
         <property name="geometry">
          <rect>
           <x>0</x>
