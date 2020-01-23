@@ -39,6 +39,9 @@ class MainApp(QMainWindow, ui):
         self.search_btn.clicked.connect(self.SearchBooks)
         self.edit_btn_save.clicked.connect(self.EditBooks)
         self.edit_btn_delete.clicked.connect(self.DeleteBooks)
+        self.add_user_btn.clicked.connect(self.AddNewUser)
+        self.login_btn.clicked.connect(self.Login)
+        self.edit_user_btn.clicked.connect(self.EditUser)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -153,13 +156,59 @@ class MainApp(QMainWindow, ui):
     ################################
     ############# Users #############
     def AddNewUser(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        userName = self.add_user_username.text()
+        email = self.add_user_email.text()
+        password = self.add_user_password.text()
+        passwordRepeat = self.add_user_password_repeat.text()
+
+        if password == passwordRepeat:
+            self.cur.execute('''
+                INSERT INTO users(user_name,user_email,user_password) VALUES (%s,%s,%s)
+            ''',(userName,email,password))
+            self.db.commit()
+            self.statusBar().showMessage('New User Added')
+        else:
+            self.label_validation.setText('please add a valid password twice')
 
     def Login(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        userName = self.login_username.text()
+        password = self.login_password.text()
+
+        sql = ''' SELECT * FROM users '''
+        self.cur.execute(sql)
+        data = self.cur.fetchall()
+        for row in data:
+            if userName == row[1] and password == row[3]:
+                print('user match')
+                self.statusBar().showMessage('valid username and password')
+                self.groupbox_edit_user.setEnabled(True)
+                self.edit_user_username.setText(row[1])
+                self.edit_user_email.setText(row[2])
+                self.edit_user_password.setText(row[3])
+                self.edit_user_password_repeat.setText(row[3])
 
     def EditUser(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        userName = self.edit_user_username.text()
+        email = self.edit_user_email.text()
+        password = self.edit_user_password.text()
+        passwordRepeat = self.edit_user_password_repeat.text()
+
+        if password == passwordRepeat:
+            self.cur.execute('''
+                UPDATE users SET user_name=%s , user_email = %s , user_password =%s WHERE user_name = %s
+            ''', (userName, email, password,self.login_username.text()))
+            self.db.commit()
+            self.statusBar().showMessage('User Updated')
+        else:
+            print('make sure you entered your password correctly!')
+
+
 
     ################################
     ############# Settings #############
