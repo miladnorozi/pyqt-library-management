@@ -42,6 +42,10 @@ class MainApp(QMainWindow, ui):
         self.add_user_btn.clicked.connect(self.AddNewUser)
         self.login_btn.clicked.connect(self.Login)
         self.edit_user_btn.clicked.connect(self.EditUser)
+        self.theme_light.clicked.connect(self.light)
+        self.theme_darkblue.clicked.connect(self.darkBlueTheme)
+        self.theme_darkorange.clicked.connect(self.darkOrangeTheme)
+        self.theme_qdark_gray.clicked.connect(self.qDarkGrayTheme)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -341,6 +345,27 @@ class MainApp(QMainWindow, ui):
             self.combo_book_publisher.addItem(publisher[0])
             self.edit_combo_publisher.addItem(publisher[0])
 
+    ################################
+    ############# UI Themes #############
+    def darkBlueTheme(self):
+        style = open('themes/darkblue.css','r')
+        style = style.read()
+        self.setStyleSheet(style)
+
+    def darkOrangeTheme(self):
+        style = open('themes/darkorange.css', 'r')
+        style = style.read()
+        self.setStyleSheet(style)
+
+    def light(self):
+        style = open('themes/light.css', 'r')
+        style = style.read()
+        self.setStyleSheet(style)
+
+    def qDarkGrayTheme(self):
+        style = open('themes/qdarkgray.css', 'r')
+        style = style.read()
+        self.setStyleSheet(style)
 
 def main():
     app = QApplication(sys.argv)

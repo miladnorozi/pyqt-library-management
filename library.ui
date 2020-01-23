@@ -1260,7 +1260,7 @@
       <string>Apply New Theme</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_17">
+    <widget class="QPushButton" name="theme_light">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -1270,10 +1270,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>Light</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_18">
+    <widget class="QPushButton" name="theme_darkblue">
      <property name="geometry">
       <rect>
        <x>220</x>
@@ -1283,10 +1283,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>Dark Blue</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_19">
+    <widget class="QPushButton" name="theme_darkorange">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -1296,10 +1296,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>Dark Orange</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_20">
+    <widget class="QPushButton" name="theme_qdark_gray">
      <property name="geometry">
       <rect>
        <x>220</x>
@@ -1309,7 +1309,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>QDark Gray</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_close_theme">
