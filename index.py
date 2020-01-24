@@ -46,6 +46,8 @@ class MainApp(QMainWindow, ui):
         self.theme_darkblue.clicked.connect(self.darkBlueTheme)
         self.theme_darkorange.clicked.connect(self.darkOrangeTheme)
         self.theme_qdark_gray.clicked.connect(self.qDarkGrayTheme)
+        self.btn_clients.clicked.connect(self.Open_Clients_Tab)
+        self.add_client_btn.clicked.connect(self.addNewClient)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -61,11 +63,14 @@ class MainApp(QMainWindow, ui):
     def Open_Books_Tab(self):
         self.tabwidget.setCurrentIndex(1)
 
-    def Open_Users_Tab(self):
+    def Open_Clients_Tab(self):
         self.tabwidget.setCurrentIndex(2)
 
-    def Open_Settings_Tab(self):
+    def Open_Users_Tab(self):
         self.tabwidget.setCurrentIndex(3)
+
+    def Open_Settings_Tab(self):
+        self.tabwidget.setCurrentIndex(4)
 
     ################################
     ############# Books #############
@@ -367,6 +372,28 @@ class MainApp(QMainWindow, ui):
         style = style.read()
         self.setStyleSheet(style)
 
+    ################################
+    ############# Clients #############
+    def addNewClient(self):
+        clientName = self.add_client_name.text()
+        clientEmail = self.add_client_email.text()
+        clientNationalId = self.add_client_nationalid.text()
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' INSERT INTO clients(client_name,client_email,client_nationalid) VALUES (%s,%s,%s)
+        ''',(clientName,clientEmail,clientNationalId))
+        self.db.commit()
+        self.db.close()
+        self.statusBar().showMessage('New Client Added')
+    def showAllClients(self):
+        pass
+    def editClient(self):
+        pass
+    def deleteClient(self):
+        pass
+    def searchClient(self):
+        pass
 def main():
     app = QApplication(sys.argv)
     window = MainApp()
