@@ -86,9 +86,9 @@ class MainApp(QMainWindow, ui):
         book_description = self.edt_book_description.toPlainText()
         book_code = self.edt_book_code.text()
         book_price = self.edt_book_price.text()
-        book_category = self.combo_book_category.currentIndex()
-        book_author = self.combo_book_author.currentIndex()
-        book_publisher = self.combo_book_publisher.currentIndex()
+        book_category = self.combo_book_category.currentText()
+        book_author = self.combo_book_author.currentText()
+        book_publisher = self.combo_book_publisher.currentText()
 
         self.cur.execute('''
             INSERT INTO book(book_name,book_description,book_code,book_category,book_author,book_publisher,book_price)
@@ -105,6 +105,7 @@ class MainApp(QMainWindow, ui):
         self.combo_book_category.setCurrentIndex(0)
         self.combo_book_author.setCurrentIndex(0)
         self.combo_book_publisher.setCurrentIndex(0)
+        self.showAllBooks()
 
     def SearchBooks(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -120,9 +121,9 @@ class MainApp(QMainWindow, ui):
         self.edit_title.setText(data[1])
         self.edit_description.setText(data[2])
         self.edit_code.setText(data[3])
-        self.edit_combo_category.setCurrentIndex(data[4])
-        self.edit_combo_author.setCurrentIndex(data[5])
-        self.edit_combo_publisher.setCurrentIndex(data[6])
+        self.edit_combo_category.setCurrentText(data[4])
+        self.edit_combo_author.setCurrentText(data[5])
+        self.edit_combo_publisher.setCurrentText(data[6])
         self.edit_price.setText(data[7])
 
     def EditBooks(self):
@@ -132,9 +133,9 @@ class MainApp(QMainWindow, ui):
         book_description = self.edit_description.toPlainText()
         book_code = self.edit_code.text()
         book_price = self.edit_price.text()
-        book_category = self.edit_combo_category.currentIndex()
-        book_author = self.edit_combo_author.currentIndex()
-        book_publisher = self.edit_combo_publisher.currentIndex()
+        book_category = self.edit_combo_category.currentText()
+        book_author = self.edit_combo_author.currentText()
+        book_publisher = self.edit_combo_publisher.currentText()
 
         book_search_title = self.search_book_title.text()
 
@@ -144,6 +145,7 @@ class MainApp(QMainWindow, ui):
 
         self.db.commit()
         self.statusBar().showMessage('book updated')
+        self.showAllBooks()
 
     def DeleteBooks(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -166,6 +168,7 @@ class MainApp(QMainWindow, ui):
         self.edit_combo_category.setCurrentIndex(0)
         self.edit_combo_author.setCurrentIndex(0)
         self.edit_combo_publisher.setCurrentIndex(0)
+        self.showAllBooks()
 
     def showAllBooks(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -174,6 +177,7 @@ class MainApp(QMainWindow, ui):
         self.cur.execute(''' SELECT book_code,book_name,book_description,book_category,book_author,book_publisher,book_price FROM book ''')
         data = self.cur.fetchall()
         print(data)
+        self.book_tabwidget.setRowCount(0)
 
         self.book_tabwidget.insertRow(0)
 
@@ -411,6 +415,10 @@ class MainApp(QMainWindow, ui):
         self.db.commit()
         self.db.close()
         self.statusBar().showMessage('New Client Added')
+        self.showAllClients()
+        self.add_client_name.setText('')
+        self.add_client_email.setText('')
+        self.add_client_nationalid.setText('')
 
     def showAllClients(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -419,6 +427,7 @@ class MainApp(QMainWindow, ui):
         self.cur.execute(''' SELECT client_name , client_email , client_nationalid FROM clients ''')
         data = self.cur.fetchall()
         print(data)
+        self.client_tabwidget.setRowCount(0)
 
         self.client_tabwidget.insertRow(0)
 
@@ -448,6 +457,11 @@ class MainApp(QMainWindow, ui):
         self.db.commit()
         self.db.close()
         self.statusBar().showMessage('Client Data Updated')
+        self.showAllClients()
+        self.edit_client_name.setText('')
+        self.edit_client_email.setText('')
+        self.edit_client_nationalid.setText('')
+        self.search_client_nationalid.setText('')
 
     def deleteClient(self):
         clientOriginalNationalId = self.search_client_nationalid.text()
@@ -468,6 +482,7 @@ class MainApp(QMainWindow, ui):
             self.edit_client_email.setText('')
             self.edit_client_nationalid.setText('')
             self.search_client_nationalid.setText('')
+            self.showAllClients()
 
     def searchClient(self):
         clientNationalId = self.search_client_nationalid.text()
