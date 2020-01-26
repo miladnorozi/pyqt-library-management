@@ -888,7 +888,7 @@
        <attribute name="title">
         <string>Edit Or Delete A Client</string>
        </attribute>
-       <widget class="QLineEdit" name="search_book_title_2">
+       <widget class="QLineEdit" name="edit_client_name">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -911,7 +911,7 @@
          <string>Client Name</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="client_edit_btn">
+       <widget class="QPushButton" name="edit_client_btn">
         <property name="geometry">
          <rect>
           <x>590</x>
@@ -924,7 +924,7 @@
          <string>Save Client Data</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="client_delete_btn">
+       <widget class="QPushButton" name="delete_client_btn">
         <property name="geometry">
          <rect>
           <x>139</x>
@@ -937,7 +937,7 @@
          <string>Delete</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="client_search_btn">
+       <widget class="QPushButton" name="search_client_btn">
         <property name="geometry">
          <rect>
           <x>569</x>
@@ -950,7 +950,7 @@
          <string>Search</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="edt_book_title_8">
+       <widget class="QLineEdit" name="edit_client_email">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -960,7 +960,7 @@
          </rect>
         </property>
        </widget>
-       <widget class="QLineEdit" name="edt_book_title_9">
+       <widget class="QLineEdit" name="edit_client_nationalid">
         <property name="geometry">
          <rect>
           <x>300</x>
@@ -989,6 +989,29 @@
           <x>150</x>
           <y>310</y>
           <width>141</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Client National Id</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="search_client_nationalid">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>90</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="ClientNationalId">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>100</y>
+          <width>151</width>
           <height>21</height>
          </rect>
         </property>

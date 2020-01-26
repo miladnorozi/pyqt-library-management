@@ -48,6 +48,9 @@ class MainApp(QMainWindow, ui):
         self.theme_qdark_gray.clicked.connect(self.qDarkGrayTheme)
         self.btn_clients.clicked.connect(self.Open_Clients_Tab)
         self.add_client_btn.clicked.connect(self.addNewClient)
+        self.search_client_btn.clicked.connect(self.searchClient)
+        self.edit_client_btn.clicked.connect(self.editClient)
+        self.delete_client_btn.clicked.connect(self.deleteClient)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -386,14 +389,60 @@ class MainApp(QMainWindow, ui):
         self.db.commit()
         self.db.close()
         self.statusBar().showMessage('New Client Added')
+
     def showAllClients(self):
         pass
+
     def editClient(self):
-        pass
+        clientOriginalNationalId = self.search_client_nationalid.text()
+        clientName = self.edit_client_name.text()
+        clienEmail = self.edit_client_email.text()
+        clientNationalId = self.edit_client_nationalid.text()
+
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute('''
+            UPDATE clients SET client_name=%s , client_email=%s , client_nationalid=%s WHERE client_nationalid=%s
+        ''',(clientName,clienEmail,clientNationalId,clientOriginalNationalId))
+
+        self.db.commit()
+        self.db.close()
+        self.statusBar().showMessage('Client Data Updated')
+
     def deleteClient(self):
-        pass
+        clientOriginalNationalId = self.search_client_nationalid.text()
+
+        warningMessage = QMessageBox.warning(self,'Delete Client','are you sure you want to delete?',QMessageBox.Yes | QMessageBox.No)
+
+        if warningMessage == QMessageBox.Yes:
+            self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+            self.cur = self.db.cursor()
+
+            sql = ''' DELETE FROM clients WHERE client_nationalid = %s '''
+            self.cur.execute(sql,[(clientOriginalNationalId)])
+
+            self.db.commit()
+            self.db.close()
+            self.statusBar().showMessage('Client Deleted')
+            self.edit_client_name.setText('')
+            self.edit_client_email.setText('')
+            self.edit_client_nationalid.setText('')
+            self.search_client_nationalid.setText('')
+
     def searchClient(self):
-        pass
+        clientNationalId = self.search_client_nationalid.text()
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        sql = '''SELECT * FROM clients WHERE client_nationalid = %s'''
+        self.cur.execute(sql,[(clientNationalId)])
+        data = self.cur.fetchone()
+        self.edit_client_name.setText(data[1])
+        self.edit_client_email.setText(data[2])
+        self.edit_client_nationalid.setText(data[3])
+
+
 def main():
     app = QApplication(sys.argv)
     window = MainApp()
