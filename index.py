@@ -20,6 +20,8 @@ class MainApp(QMainWindow, ui):
         self.Show_Category_Combobox()
         self.Show_Author_Combobox()
         self.Show_Publisher_Combobox()
+        self.showAllClients()
+        self.showAllBooks()
 
     def Handel_UI_Changes(self):
         self.Hiding_Themes()
@@ -164,6 +166,26 @@ class MainApp(QMainWindow, ui):
         self.edit_combo_category.setCurrentIndex(0)
         self.edit_combo_author.setCurrentIndex(0)
         self.edit_combo_publisher.setCurrentIndex(0)
+
+    def showAllBooks(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT book_code,book_name,book_description,book_category,book_author,book_publisher,book_price FROM book ''')
+        data = self.cur.fetchall()
+        print(data)
+
+        self.book_tabwidget.insertRow(0)
+
+        for row, form in enumerate(data):
+            for column , item in enumerate(form):
+                self.book_tabwidget.setItem(row,column,QTableWidgetItem(str(item)))
+                column+=1
+
+            row_position = self.book_tabwidget.rowCount()
+            self.book_tabwidget.insertRow(row_position)
+
+        self.db.close()
 
     ################################
     ############# Users #############
@@ -391,7 +413,24 @@ class MainApp(QMainWindow, ui):
         self.statusBar().showMessage('New Client Added')
 
     def showAllClients(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(''' SELECT client_name , client_email , client_nationalid FROM clients ''')
+        data = self.cur.fetchall()
+        print(data)
+
+        self.client_tabwidget.insertRow(0)
+
+        for row, form in enumerate(data):
+            for column , item in enumerate(form):
+                self.client_tabwidget.setItem(row,column,QTableWidgetItem(str(item)))
+                column+=1
+
+            row_position = self.client_tabwidget.rowCount()
+            self.client_tabwidget.insertRow(row_position)
+
+        self.db.close()
 
     def editClient(self):
         clientOriginalNationalId = self.search_client_nationalid.text()
