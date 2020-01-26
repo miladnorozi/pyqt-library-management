@@ -1,3 +1,5 @@
+import datetime
+
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -53,6 +55,7 @@ class MainApp(QMainWindow, ui):
         self.search_client_btn.clicked.connect(self.searchClient)
         self.edit_client_btn.clicked.connect(self.editClient)
         self.delete_client_btn.clicked.connect(self.deleteClient)
+        self.daytoday_add_btn.clicked.connect(self.handelDayOperations)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -495,6 +498,25 @@ class MainApp(QMainWindow, ui):
         self.edit_client_name.setText(data[1])
         self.edit_client_email.setText(data[2])
         self.edit_client_nationalid.setText(data[3])
+
+    ################################
+    ############# Day to day operations #############
+    def handelDayOperations(self):
+        bookTitle = self.daytoday_booktitle.text()
+        type = self.daytoday_type.currentText()
+        days = self.daytoday_days.currentIndex() +1
+        today_date = datetime.date.today()
+        clientName = self.daytoday_clientname.text()
+        to_date = today_date + datetime.timedelta(days=int(days))
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        self.cur.execute('''
+            INSERT INTO dayoperations (book_name,type,days,date,client,to_date)
+            VALUES (%s,%s,%s,%s,%s,%s)
+        ''',(bookTitle,type,days,today_date,clientName,to_date))
+
+        self.db.commit()
+        self.statusBar().showMessage('New Operation Added')
 
 
 def main():
