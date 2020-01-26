@@ -261,7 +261,7 @@
        <string>Enter book title</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="daytoday_tabwidget">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -277,17 +277,17 @@
       </column>
       <column>
        <property name="text">
-        <string>New Column</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
         <string>Client Name</string>
        </property>
       </column>
       <column>
        <property name="text">
         <string>Type</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>From</string>
        </property>
       </column>
       <column>
