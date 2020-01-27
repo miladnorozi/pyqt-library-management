@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="login_btn">
    <property name="geometry">
     <rect>
      <x>220</x>
@@ -26,7 +26,7 @@
     <string>Login</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="login_username">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -39,7 +39,7 @@
     <string>Enter User Name</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="login_password">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -48,11 +48,14 @@
      <height>51</height>
     </rect>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
    <property name="placeholderText">
     <string>Enter Password</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="login_label">
    <property name="geometry">
     <rect>
      <x>100</x>
@@ -62,7 +65,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Make Sure Your Enetered Username And Password Correct</string>
+    <string/>
    </property>
   </widget>
  </widget>
