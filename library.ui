@@ -264,10 +264,10 @@
      <widget class="QTableWidget" name="daytoday_tabwidget">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>180</y>
-        <width>881</width>
-        <height>341</height>
+        <x>0</x>
+        <y>130</y>
+        <width>981</width>
+        <height>431</height>
        </rect>
       </property>
       <column>
@@ -309,6 +309,19 @@
        <string>Enter client name</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_export_daytoday">
+      <property name="geometry">
+       <rect>
+        <x>805</x>
+        <y>570</y>
+        <width>171</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Export to excel</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -324,7 +337,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_10">
        <attribute name="title">
@@ -335,8 +348,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>861</width>
-          <height>581</height>
+          <width>971</width>
+          <height>521</height>
          </rect>
         </property>
         <column>
@@ -374,6 +387,19 @@
           <string>Book Price</string>
          </property>
         </column>
+       </widget>
+       <widget class="QPushButton" name="btn_export_book">
+        <property name="geometry">
+         <rect>
+          <x>810</x>
+          <y>530</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Export to excel</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_5">
@@ -773,7 +799,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_12">
        <attribute name="title">
@@ -784,8 +810,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>861</width>
-          <height>581</height>
+          <width>971</width>
+          <height>521</height>
          </rect>
         </property>
         <column>
@@ -803,6 +829,19 @@
           <string>Client National Id</string>
          </property>
         </column>
+       </widget>
+       <widget class="QPushButton" name="btn_export_clients">
+        <property name="geometry">
+         <rect>
+          <x>790</x>
+          <y>530</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Export to excel</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_13">
