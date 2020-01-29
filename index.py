@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import *
 import sys
 import MySQLdb
 from PyQt5.uic import loadUiType
+from xlrd import *
+from xlsxwriter import *
 
 ui, _ = loadUiType('library.ui')
 login, _ = loadUiType('login.ui')
@@ -81,6 +83,9 @@ class MainApp(QMainWindow, ui):
         self.edit_client_btn.clicked.connect(self.editClient)
         self.delete_client_btn.clicked.connect(self.deleteClient)
         self.daytoday_add_btn.clicked.connect(self.handelDayOperations)
+        self.btn_export_daytoday.clicked.connect(self.exportDayToDay)
+        self.btn_export_clients.clicked.connect(self.exportClients)
+        self.btn_export_books.clicked.connect(self.exportBooks)
 
     def Show_Themes(self):
         self.groupbox_theme.show()
@@ -526,6 +531,7 @@ class MainApp(QMainWindow, ui):
 
     ################################
     ############# Day to day operations #############
+
     def handelDayOperations(self):
         bookTitle = self.daytoday_booktitle.text()
         type = self.daytoday_type.currentText()
@@ -543,6 +549,7 @@ class MainApp(QMainWindow, ui):
         self.db.commit()
         self.statusBar().showMessage('New Operation Added')
         self.showAllOperations()
+
     def showAllOperations(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
         self.cur = self.db.cursor()
@@ -560,6 +567,40 @@ class MainApp(QMainWindow, ui):
                 column+=1
             row_position = self.daytoday_tabwidget.rowCount()
             self.daytoday_tabwidget.insertRow(row_position)
+
+
+    ################################
+    ############# Export Data #############
+    def exportDayToDay(self):
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+        self.cur.execute('''
+            SELECT book_name,client,type,date,to_date FROM dayoperations
+        ''')
+        data = self.cur.fetchall()
+        wb = Workbook('day_operations.xlsx')
+        sheet1 = wb.add_worksheet()
+        sheet1.write(0, 0, 'book title')
+        sheet1.write(0, 1, 'client name')
+        sheet1.write(0, 2, 'type')
+        sheet1.write(0, 3, 'from - date')
+        sheet1.write(0, 4, 'to - date')
+        row_number = 1
+        for row in data:
+            column_number = 0
+            for item in row:
+                sheet1.write(row_number, column_number,str(item))
+                column_number += 1
+            row_number += 1
+        wb.close()
+        self.statusBar().showMessage('Report Created Successfully')
+        
+    def exportBooks(self):
+        pass
+
+    def exportClients(self):
+        pass
+
 
 def main():
     app = QApplication(sys.argv)
