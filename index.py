@@ -17,6 +17,11 @@ class Login(QWidget,login):
         QWidget.__init__(self)
         self.setupUi(self)
         self.login_btn.clicked.connect(self.handelLogin)
+        style = open('themes/darkblue.css','r')
+        style = style.read()
+        self.setStyleSheet(style)
+
+
 
     def handelLogin(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
@@ -51,6 +56,7 @@ class MainApp(QMainWindow, ui):
         self.showAllClients()
         self.showAllBooks()
         self.showAllOperations()
+        self.darkBlueTheme()
 
     def Handel_UI_Changes(self):
         self.Hiding_Themes()
