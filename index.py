@@ -571,6 +571,7 @@ class MainApp(QMainWindow, ui):
 
     ################################
     ############# Export Data #############
+
     def exportDayToDay(self):
         self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
         self.cur = self.db.cursor()
@@ -594,12 +595,56 @@ class MainApp(QMainWindow, ui):
             row_number += 1
         wb.close()
         self.statusBar().showMessage('Report Created Successfully')
-        
+
     def exportBooks(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(
+            ''' SELECT book_code,book_name,book_description,book_category,book_author,book_publisher,book_price FROM book ''')
+        data = self.cur.fetchall()
+
+        wb = Workbook('all_books.xlsx')
+        sheet1 = wb.add_worksheet()
+        sheet1.write(0, 0, 'Book Code')
+        sheet1.write(0, 1, 'Book Name')
+        sheet1.write(0, 2, 'Book Description')
+        sheet1.write(0, 3, 'Book Category')
+        sheet1.write(0, 4, 'Book Author')
+        sheet1.write(0, 5, 'Book Publisher')
+        sheet1.write(0, 6, 'Book Price')
+        row_number = 1
+        for row in data:
+            column_number = 0
+            for item in row:
+                sheet1.write(row_number, column_number, str(item))
+                column_number += 1
+            row_number += 1
+        wb.close()
+        self.statusBar().showMessage('Report Created Successfully')
 
     def exportClients(self):
-        pass
+        self.db = MySQLdb.connect(host='localhost', user='root', password='', db='library')
+        self.cur = self.db.cursor()
+
+        self.cur.execute(
+            ''' SELECT client_name , client_email , client_nationalid FROM clients ''')
+        data = self.cur.fetchall()
+
+        wb = Workbook('all_clients.xlsx')
+        sheet1 = wb.add_worksheet()
+        sheet1.write(0, 0, 'Client Name')
+        sheet1.write(0, 1, 'Client Email')
+        sheet1.write(0, 2, 'Client NationalId')
+        row_number = 1
+        for row in data:
+            column_number = 0
+            for item in row:
+                sheet1.write(row_number, column_number, str(item))
+                column_number += 1
+            row_number += 1
+        wb.close()
+        self.statusBar().showMessage('Report Created Successfully')
 
 
 def main():
